@@ -1,0 +1,55 @@
+{
+    "name": "vizuh/filament-clicktrail",
+    "description": "Filament 3 plugin for ClickTrail attribution: settings page, attribution record dashboard, diagnostics widget, and Laravel/Filament event mapping.",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.1",
+        "filament/filament": "^3.0",
+        "illuminate/support": "^10.0|^11.0",
+        "clicktrail/php-sdk": "dev-main"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../clicktrail-php",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/vizuh/clicktrail-php.git"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "ClickTrail\\Filament\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ClickTrail\\Filament\\ClickTrailFilamentServiceProvider"
+            ]
+        }
+    },
+    "authors": [
+        {
+            "name": "Vizuh OU",
+            "email": "hugo@vizuh.com"
+        }
+    ],
+    "keywords": [
+        "filament",
+        "laravel",
+        "attribution",
+        "utm",
+        "gclid",
+        "consent"
+    ],
+    "support": {
+        "issues": "https://github.com/vizuh/filament-clicktrail/issues",
+        "source": "https://github.com/vizuh/filament-clicktrail"
+    }
+}
