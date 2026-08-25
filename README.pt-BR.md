@@ -29,7 +29,7 @@ Atribuição ClickTrail dentro do seu painel Filament 3 — configurações, reg
 
 Dados de atribuição que ninguém consegue ver são dados em que ninguém confia. Este plugin traz os registros de primeiro/último toque armazenados pelo ClickTrail, snapshots de consentimento e diagnósticos de supressão direto para um painel Filament existente — estritamente somente leitura, porque o estado de atribuição pertence ao pipeline de captura, nunca a edições manuais.
 
-Requer PHP >= 8.1, Laravel 10 ou 11, Filament 3 e [`clicktrail/php-sdk`](https://github.com/vizuh/clicktrail-php).
+Requer PHP >= 8.1, Laravel 12.60+ ou 13.10+, Filament 3.3.55+ e [`clicktrail/php-sdk`](https://github.com/vizuh/clicktrail-php).
 
 ## Instalação
 

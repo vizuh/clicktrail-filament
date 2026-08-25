@@ -29,7 +29,7 @@ ClickTrail-Attribution in Ihrem Filament-3-Panel — Einstellungen, schreibgesch
 
 Attributionsdaten, die niemand sehen kann, sind Daten, denen niemand vertraut. Dieses Plugin bringt die von ClickTrail gespeicherten First-/Last-Touch-Datensätze, Consent-Snapshots und Unterdrückungsdiagnostik direkt in ein bestehendes Filament-Panel — strikt schreibgeschützt, denn der Attributionszustand gehört zur Capture-Pipeline, nie zu manuellen Eingriffen.
 
-Benötigt PHP >= 8.1, Laravel 10 oder 11, Filament 3 und [`clicktrail/php-sdk`](https://github.com/vizuh/clicktrail-php).
+Benötigt PHP >= 8.1, Laravel 12.60+ oder 13.10+, Filament 3.3.55+ und [`clicktrail/php-sdk`](https://github.com/vizuh/clicktrail-php).
 
 ## Installation
 

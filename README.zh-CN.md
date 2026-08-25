@@ -29,7 +29,7 @@
 
 看不到的归因数据，就没人会信任。本插件把 ClickTrail 存储的首触/末触记录、同意快照和抑制诊断直接呈现在现有的 Filament 面板中 —— 严格只读，因为归因状态属于采集管道，绝不应被手工修改。
 
-需要 PHP >= 8.1、Laravel 10 或 11、Filament 3 以及 [`clicktrail/php-sdk`](https://github.com/vizuh/clicktrail-php)。
+需要 PHP >= 8.1、Laravel 12.60+ 或 13.10+、Filament 3.3.55+ 以及 [`clicktrail/php-sdk`](https://github.com/vizuh/clicktrail-php)。
 
 ## 安装
 
