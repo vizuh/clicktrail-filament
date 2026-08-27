@@ -17,10 +17,10 @@ final class EventMap
 {
     /** Default model-class basename => canonical event name. */
     private const DEFAULT_MAP = [
-        'lead' => Stable::EVENT_LEAD_SUBMITTED,
-        'appointment' => Stable::EVENT_APPOINTMENT_BOOKED,
-        'sale' => Stable::EVENT_SALE_COMPLETED,
-        'order' => Stable::EVENT_SALE_COMPLETED,
+        'lead' => Stable::EVENT_LEAD_CREATED,
+        'appointment' => Stable::EVENT_BOOKING_CREATED,
+        'sale' => Stable::EVENT_SALE,
+        'order' => Stable::EVENT_SALE,
     ];
 
     private const REFUND_SUFFIXES = ['refund'];
@@ -38,7 +38,7 @@ final class EventMap
         }
 
         if ($lifecycleEvent !== null && str_contains($lifecycleEvent, 'deleted')) {
-            return Stable::EVENT_SALE_REFUNDED;
+            return Stable::EVENT_REFUND;
         }
 
         if (isset(self::DEFAULT_MAP[$basename])) {
@@ -52,13 +52,13 @@ final class EventMap
     {
         foreach (self::REFUND_SUFFIXES as $suffix) {
             if (str_ends_with($basename, $suffix) || str_contains($event, 'refund')) {
-                return Stable::EVENT_SALE_REFUNDED;
+                return Stable::EVENT_REFUND;
             }
         }
 
         foreach (self::ATTENDED_MARKERS as $marker) {
             if (str_contains($event, $marker)) {
-                return Stable::EVENT_APPOINTMENT_ATTENDED;
+                return Stable::EVENT_BOOKING_COMPLETED;
             }
         }
 

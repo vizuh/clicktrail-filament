@@ -62,11 +62,11 @@ public function panel(Panel $panel): Panel
 use App\Models\Lead;
 use ClickTrail\Filament\Support\EventMap;
 
-EventMap::resolve(new Lead(), 'created');  // 'lead.submitted' —— 规范事件名
-EventMap::resolve(new Lead(), 'deleted');  // 'sale.refunded' —— 删除映射为退款
+EventMap::resolve(new Lead(), 'created');  // 'lead_created' —— 规范事件名
+EventMap::resolve(new Lead(), 'deleted');  // 'refund' —— 删除映射为退款
 ```
 
-常见模型 basename 有默认映射（`lead`、`appointment`、`sale`、`order`）。可通过配置键 `clicktrail-filament.event_map` 按模型扩展或覆盖；以 `refund` 结尾的 basename 会解析为 `sale.refunded`，包含 `attended` 的事件会解析为 `appointment.attended`。
+常见模型 basename 有默认映射（`lead`、`appointment`、`sale`、`order`）。可通过配置键 `clicktrail-filament.event_map` 按模型扩展或覆盖；以 `refund` 结尾的 basename 会解析为 `refund`，包含 `attended` 的事件会解析为 `booking_completed`。
 
 ## 归因记录
 

@@ -63,11 +63,11 @@ public function panel(Panel $panel): Panel
 use App\Models\Lead;
 use ClickTrail\Filament\Support\EventMap;
 
-EventMap::resolve(new Lead(), 'created');  // 'lead.submitted' — kanonischer Eventname
-EventMap::resolve(new Lead(), 'deleted');  // 'sale.refunded' — Löschung wird als Refund abgebildet
+EventMap::resolve(new Lead(), 'created');  // 'lead_created' — kanonischer Eventname
+EventMap::resolve(new Lead(), 'deleted');  // 'refund' — Löschung wird als Refund abgebildet
 ```
 
-Modell-Basenames haben eine Standardzuordnung (`lead`, `appointment`, `sale`, `order`). Erweitern oder überschreiben Sie pro Modell über den Config-Schlüssel `clicktrail-filament.event_map`; ein Basename mit Endung `refund` löst zu `sale.refunded` auf, Events mit `attended` zu `appointment.attended`.
+Modell-Basenames haben eine Standardzuordnung (`lead`, `appointment`, `sale`, `order`). Erweitern oder überschreiben Sie pro Modell über den Config-Schlüssel `clicktrail-filament.event_map`; ein Basename mit Endung `refund` löst zu `refund` auf, Events mit `attended` zu `booking_completed`.
 
 ## Attributionsdatensätze
 
