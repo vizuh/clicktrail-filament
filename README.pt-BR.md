@@ -4,7 +4,8 @@
 
 **vizuh/filament-clicktrail**
 
-Atribuição ClickTrail dentro do seu painel Filament 3 — configurações, registros de atribuição somente leitura, diagnósticos de supressão e mapeamento de eventos. Nada para construir à mão.
+Superfícies Filament 3 para configurações do ClickTrail, registros de atribuição
+somente leitura, diagnósticos de supressão e mapeamento de eventos.
 
 </div>
 
@@ -27,7 +28,11 @@ Atribuição ClickTrail dentro do seu painel Filament 3 — configurações, reg
 
 ## Por quê
 
-Dados de atribuição que ninguém consegue ver são dados em que ninguém confia. Este plugin traz os registros de primeiro/último toque armazenados pelo ClickTrail, snapshots de consentimento e diagnósticos de supressão direto para um painel Filament existente — estritamente somente leitura, porque o estado de atribuição pertence ao pipeline de captura, nunca a edições manuais.
+Use este plugin quando operadores precisarem inspecionar registros do ClickTrail
+em um painel Filament existente. Ele exibe registros armazenados de primeiro e
+último toque, snapshots de consentimento e diagnósticos de supressão. Os
+registros de atribuição continuam somente leitura porque o pipeline de captura
+controla esse estado.
 
 Requer PHP >= 8.1, Laravel 12.60+ ou 13.10+, Filament 3.3.55+ e [`clicktrail/php-sdk`](https://github.com/vizuh/clicktrail-php).
 
@@ -64,8 +69,8 @@ public function panel(Panel $panel): Panel
 use App\Models\Lead;
 use ClickTrail\Filament\Support\EventMap;
 
-EventMap::resolve(new Lead(), 'created');  // 'lead_created' — nome canônico do evento
-EventMap::resolve(new Lead(), 'deleted');  // 'refund' — exclusão mapeia para reembolso
+EventMap::resolve(new Lead(), 'created');  // 'lead_created'; nome canônico do evento
+EventMap::resolve(new Lead(), 'deleted');  // 'refund'; exclusão mapeia para reembolso
 ```
 
 Os basenames de modelo têm mapa padrão (`lead`, `appointment`, `sale`, `order`). Estenda ou sobrescreva por model pela chave de config `clicktrail-filament.event_map`; basename terminando em `refund` resolve para `refund`, e eventos contendo `attended` resolvem para `booking_completed`.
@@ -97,7 +102,7 @@ Um gate de capacidade desligado significa que aquele uso não exige consentiment
 
 ## Diagnósticos
 
-O widget de estatísticas lê os contadores de `clicktrail_diagnostics` — uma métrica por motivo de supressão, em amarelo quando diferente de zero:
+O widget de estatísticas lê os contadores de `clicktrail_diagnostics`; uma métrica por motivo de supressão, em amarelo quando diferente de zero:
 
 ```php
 Stat::make('adUserDataUnknownAtCapture', '12') // entregas suprimidas para esse motivo
@@ -125,7 +130,7 @@ if (! ConsentBehavior::can($snapshot, 'ad_user_data')) {
 | Consentimento | Unknown = negado, aplicado antes da entrega | Muitas vezes apenas um flag informativo |
 | Eventos | Nomes canônicos `Stable::EVENT_*` compartilhados com todo adapter ClickTrail | Nomes de evento inventados por projeto |
 
-Ele não captura toques nem entrega lotes — isso é do pipeline do adapter Laravel; este plugin torna os resultados visíveis e auditáveis.
+Ele não captura toques nem entrega lotes; isso é do pipeline do adapter Laravel; este plugin torna os resultados visíveis e auditáveis.
 
 ## Testes
 

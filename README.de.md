@@ -4,7 +4,8 @@
 
 **vizuh/filament-clicktrail**
 
-ClickTrail-Attribution in Ihrem Filament-3-Panel — Einstellungen, schreibgeschützte Attributionsdatensätze, Unterdrückungsdiagnostik und Event-Mapping. Kein Handbau nötig.
+Filament-3-Oberflächen für ClickTrail-Einstellungen, schreibgeschützte
+Attributionsdatensätze, Unterdrückungsdiagnostik und Event-Mapping.
 
 </div>
 
@@ -27,7 +28,11 @@ ClickTrail-Attribution in Ihrem Filament-3-Panel — Einstellungen, schreibgesch
 
 ## Warum
 
-Attributionsdaten, die niemand sehen kann, sind Daten, denen niemand vertraut. Dieses Plugin bringt die von ClickTrail gespeicherten First-/Last-Touch-Datensätze, Consent-Snapshots und Unterdrückungsdiagnostik direkt in ein bestehendes Filament-Panel — strikt schreibgeschützt, denn der Attributionszustand gehört zur Capture-Pipeline, nie zu manuellen Eingriffen.
+Verwenden Sie dieses Plugin, wenn Operatoren ClickTrail-Datensätze in einem
+bestehenden Filament-Panel prüfen müssen. Es zeigt gespeicherte First- und
+Last-Touch-Datensätze, Consent-Snapshots und Unterdrückungsdiagnostik. Die
+Attributionsdatensätze bleiben schreibgeschützt, weil die Capture-Pipeline
+diesen Zustand besitzt.
 
 Benötigt PHP >= 8.1, Laravel 12.60+ oder 13.10+, Filament 3.3.55+ und [`clicktrail/php-sdk`](https://github.com/vizuh/clicktrail-php).
 
@@ -63,8 +68,8 @@ public function panel(Panel $panel): Panel
 use App\Models\Lead;
 use ClickTrail\Filament\Support\EventMap;
 
-EventMap::resolve(new Lead(), 'created');  // 'lead_created' — kanonischer Eventname
-EventMap::resolve(new Lead(), 'deleted');  // 'refund' — Löschung wird als Refund abgebildet
+EventMap::resolve(new Lead(), 'created');  // 'lead_created'; kanonischer Eventname
+EventMap::resolve(new Lead(), 'deleted');  // 'refund'; Löschung wird als Refund abgebildet
 ```
 
 Modell-Basenames haben eine Standardzuordnung (`lead`, `appointment`, `sale`, `order`). Erweitern oder überschreiben Sie pro Modell über den Config-Schlüssel `clicktrail-filament.event_map`; ein Basename mit Endung `refund` löst zu `refund` auf, Events mit `attended` zu `booking_completed`.
@@ -96,7 +101,7 @@ Ein ausgeschalteter Capability-Gate bedeutet, dass dieser Einsatz keine CMP-Zust
 
 ## Diagnostik
 
-Das Statistik-Widget liest die Zähler aus `clicktrail_diagnostics` — eine Kennzahl pro Unterdrückungsgrund, gelb wenn ungleich null:
+Das Statistik-Widget liest die Zähler aus `clicktrail_diagnostics`; eine Kennzahl pro Unterdrückungsgrund, gelb wenn ungleich null:
 
 ```php
 Stat::make('adUserDataUnknownAtCapture', '12') // unterdrückte Auslieferungen für diesen Grund
@@ -124,7 +129,7 @@ if (! ConsentBehavior::can($snapshot, 'ad_user_data')) {
 | Consent | Unknown = denied, durchgesetzt vor der Auslieferung | Oft nur ein Anzeige-Flag |
 | Events | Kanonische `Stable::EVENT_*`-Namen, geteilt mit jedem ClickTrail-Adapter | Pro Projekt erfundene Eventnamen |
 
-Es selbst erfasst keine Touches und liefert keine Batches aus — das übernimmt die Laravel-Adapter-Pipeline; dieses Plugin macht ihre Ergebnisse sichtbar und prüfbar.
+Es selbst erfasst keine Touches und liefert keine Batches aus; das übernimmt die Laravel-Adapter-Pipeline; dieses Plugin macht ihre Ergebnisse sichtbar und prüfbar.
 
 ## Tests
 

@@ -1,6 +1,6 @@
 {
     "name": "vizuh/filament-clicktrail",
-    "description": "Filament 3 plugin for ClickTrail attribution: settings page, attribution record dashboard, diagnostics widget, and Laravel/Filament event mapping.",
+    "description": "Filament 3 surfaces for ClickTrail settings, read-only attribution records, suppression diagnostics, and event mapping.",
     "type": "library",
     "license": "MIT",
     "require": {
