@@ -4,7 +4,7 @@
 
 **vizuh/filament-clicktrail**
 
-在 Filament 3 面板中呈现 ClickTrail 归因数据 —— 设置页、只读归因记录、抑制诊断和事件映射，无需手工搭建。
+面向 Filament 3 的 ClickTrail 设置、只读归因记录、抑制诊断和事件映射界面。
 
 </div>
 
@@ -27,7 +27,7 @@
 
 ## 为什么
 
-看不到的归因数据，就没人会信任。本插件把 ClickTrail 存储的首触/末触记录、同意快照和抑制诊断直接呈现在现有的 Filament 面板中 —— 严格只读，因为归因状态属于采集管道，绝不应被手工修改。
+当运营人员需要在现有 Filament 面板中检查 ClickTrail 记录时，请使用此插件。它显示已存储的首次触点和末次触点记录、同意快照及抑制诊断。归因记录保持只读，因为该状态由采集管道管理。
 
 需要 PHP >= 8.1、Laravel 12.60+ 或 13.10+、Filament 3.3.55+ 以及 [`clicktrail/php-sdk`](https://github.com/vizuh/clicktrail-php)。
 
@@ -62,8 +62,8 @@ public function panel(Panel $panel): Panel
 use App\Models\Lead;
 use ClickTrail\Filament\Support\EventMap;
 
-EventMap::resolve(new Lead(), 'created');  // 'lead_created' —— 规范事件名
-EventMap::resolve(new Lead(), 'deleted');  // 'refund' —— 删除映射为退款
+EventMap::resolve(new Lead(), 'created');  // 'lead_created'；规范事件名
+EventMap::resolve(new Lead(), 'deleted');  // 'refund'；删除映射为退款
 ```
 
 常见模型 basename 有默认映射（`lead`、`appointment`、`sale`、`order`）。可通过配置键 `clicktrail-filament.event_map` 按模型扩展或覆盖；以 `refund` 结尾的 basename 会解析为 `refund`，包含 `attended` 的事件会解析为 `booking_completed`。
@@ -95,7 +95,7 @@ TextColumn::make('consent_snapshot_summary');        // "analytics_storage=grant
 
 ## 诊断
 
-统计组件读取 `clicktrail_diagnostics` 计数器 —— 每个抑制原因一条指标，非零时显示为警告色：
+统计组件读取 `clicktrail_diagnostics` 计数器；每个抑制原因一条指标，非零时显示为警告色：
 
 ```php
 Stat::make('adUserDataUnknownAtCapture', '12') // 该原因下被抑制的发送次数
@@ -123,7 +123,7 @@ if (! ConsentBehavior::can($snapshot, 'ad_user_data')) {
 | 同意 | unknown = denied，在发送之前强制执行 | 往往只是展示用的标志位 |
 | 事件 | 与所有 ClickTrail adapter 共享的 `Stable::EVENT_*` 规范名称 | 各项目自造的事件名 |
 
-它本身不采集 touch，也不批量投递 —— 这由 Laravel adapter 管道负责；本插件只是让结果可见、可审计。
+它本身不采集 touch，也不批量投递；这由 Laravel adapter 管道负责；本插件只是让结果可见、可审计。
 
 ## 测试
 

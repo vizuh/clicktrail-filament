@@ -4,7 +4,8 @@
 
 **vizuh/filament-clicktrail**
 
-ClickTrail attribution inside your Filament 3 panel — settings, read-only attribution records, suppression diagnostics, and event mapping. Nothing to build by hand.
+Filament 3 surfaces for ClickTrail settings, read-only attribution records,
+suppression diagnostics, and event mapping.
 
 </div>
 
@@ -27,7 +28,10 @@ ClickTrail attribution inside your Filament 3 panel — settings, read-only attr
 
 ## Why
 
-Attribution data nobody can see is attribution nobody trusts. This plugin surfaces ClickTrail\'s stored first/last-touch records, consent snapshots, and suppression diagnostics directly inside an existing Filament panel — strictly read-only, because attribution state belongs to the capture pipeline, never to hand edits.
+Use this plugin when operators need to inspect ClickTrail records inside an
+existing Filament panel. It displays stored first-touch and last-touch records,
+consent snapshots, and suppression diagnostics. Attribution records remain
+read-only because the capture pipeline owns that state.
 
 Requires PHP >= 8.1, Laravel 12.60+ or 13.10+, Filament 3.3.55+, and [`clicktrail/php-sdk`](https://github.com/vizuh/clicktrail-php).
 
@@ -63,8 +67,8 @@ public function panel(Panel $panel): Panel
 use App\Models\Lead;
 use ClickTrail\Filament\Support\EventMap;
 
-EventMap::resolve(new Lead(), 'created');  // 'lead_created' — canonical event name
-EventMap::resolve(new Lead(), 'deleted');  // 'refund' — deletion maps to refund
+EventMap::resolve(new Lead(), 'created');  // 'lead_created'; canonical event name
+EventMap::resolve(new Lead(), 'deleted');  // 'refund'; deletion maps to refund
 ```
 
 Model basenames map by default (`lead`, `appointment`, `sale`, `order`). Extend or override per model through the `clicktrail-filament.event_map` config key; a basename ending in `refund` resolves to `refund`, and events containing `attended` resolve to `booking_completed`.
@@ -96,7 +100,7 @@ A capability gate that is off means that use does not require CMP consent (gate-
 
 ## Diagnostics
 
-The stats widget reads `clicktrail_diagnostics` counters — one stat per suppression reason, colored warning when nonzero:
+The stats widget reads `clicktrail_diagnostics` counters; one stat per suppression reason, colored warning when nonzero:
 
 ```php
 Stat::make('adUserDataUnknownAtCapture', '12') // count of suppressed deliveries for this reason
@@ -124,7 +128,7 @@ if (! ConsentBehavior::can($snapshot, 'ad_user_data')) {
 | Consent | Unknown = denied, enforced upstream of delivery | Often a display-only flag |
 | Events | Canonical `Stable::EVENT_*` names shared with every ClickTrail adapter | Per-project invented event names |
 
-It does not capture touches or deliver batches itself — the Laravel adapter pipeline owns that; this plugin makes its results visible and auditable.
+It does not capture touches or deliver batches itself; the Laravel adapter pipeline owns that; this plugin makes its results visible and auditable.
 
 ## Testing
 
